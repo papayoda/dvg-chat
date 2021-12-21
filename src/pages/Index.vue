@@ -44,6 +44,7 @@
                 bottom-slots
                 v-model="username"
                 placeholder="Username"
+                :rules="[required]"
               >
                 <template v-slot:before>
                   <q-icon name="person" />
@@ -54,6 +55,7 @@
                 bottom-slots
                 v-model="password"
                 placeholder="Password"
+                :rules="[required]"
               >
                 <template v-slot:before>
                   <q-icon name="lock" />
@@ -98,6 +100,7 @@
                 class="q-pa-sm"
                 bottom-slots
                 v-model="usernameRegister"
+                :rules="[required, shortUser, checkUsername]"
                 placeholder="Username"
               >
                 <template v-slot:before>
@@ -108,6 +111,7 @@
                 class="q-pa-sm"
                 bottom-slots
                 v-model="emailRegister"
+                :rules="[required, isEmail]"
                 placeholder="Email"
               >
                 <template v-slot:before>
@@ -118,6 +122,7 @@
                 class="q-pa-sm"
                 bottom-slots
                 v-model="fullNameRegister"
+                :rules="[required]"
                 placeholder="Full Name"
               >
                 <template v-slot:before>
@@ -128,6 +133,7 @@
                 class="q-pa-sm"
                 bottom-slots
                 v-model="passwordRegister"
+                :rules="[required, isPassword]"
                 placeholder="Password"
               >
                 <template v-slot:before>
@@ -138,6 +144,7 @@
                 class="q-pa-sm"
                 bottom-slots
                 v-model="rePasswordRegister"
+                :rules="[required, samePassword]"
                 placeholder="Retype Password"
               >
                 <template v-slot:before>
@@ -166,6 +173,7 @@
 
 <script>
 import { ref } from "vue";
+import { api } from "boot/axios";
 
 export default {
   name: "PageIndex",
@@ -173,10 +181,67 @@ export default {
     const password = ref("");
     const username = ref("");
     const usernameRegister = ref("");
+    const emailRegister = ref("");
+    const fullNameRegister = ref("");
+    const passwordRegister = ref("");
+    const rePasswordRegister = ref("");
+    
     
     const tabs = ref("signup");
     const rememberMe = ref(false);
-    return { password, username, rememberMe, tabs };
+    return { 
+      password, 
+      username, 
+      rememberMe, 
+      tabs, 
+      usernameRegister, 
+      emailRegister, 
+      fullNameRegister, 
+      passwordRegister, 
+      rePasswordRegister,
+
+      required(val) {
+        return new Promise((resolve) => {
+          resolve(!!val || "* Required");
+        });
+      },
+      isPassword(val) {
+        const passwordRegex =  /^(?=.*[0-9])(?=.*[!@#$%^&*:])[a-zA-Z0-9!@#$%^&*:]{7,15}$/; 
+        return new Promise((resolve) => {
+          resolve(passwordRegex.test(val) || "7 to 15 characters which contain at least one numeric digit and a special character" );
+        });
+      },
+      samePassword(val) {
+        return new Promise((resolve) => {
+          resolve(val === passwordRegister.value || "Not the same password");
+        });
+      },
+      isEmail(val) {
+        return new Promise((resolve) => {
+          const emailPattern =
+            /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+          resolve(emailPattern.test(val) || "Enter a valid email");
+        });
+      },
+      shortUser(val) {
+        return new Promise((resolve) => {
+          resolve((val && val.length > 3) || "Very short username");
+        });
+      },
+      checkUsername(val) {
+        return new Promise((resolve) => {
+          api.get("checkusername/" + val).then((response) => {
+            resolve((!response.data) || "This username is taken");
+          });
+        });
+      },
+      // checkUsernameCharacters(val){
+      //   const usernameRegex = /^[A-Za-z0-9 ]+$/;
+      //   return new Promise((resolve) => {
+      //     resolve(usernameRegex.test(val) || "Special characters aren't" );
+      //   })
+      // }
+    };
   },
 };
 </script>
