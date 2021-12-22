@@ -25,7 +25,12 @@
             no-caps
             style="border-radius: 40px"
           />
-          <q-tab name="signup" label="Sign up" no-caps style="border-radius: 40px" />
+          <q-tab
+            name="signup"
+            label="Sign up"
+            no-caps
+            style="border-radius: 40px"
+          />
         </q-tabs>
         <q-tab-panels v-model="tabs" animated>
           <q-tab-panel class="no-padding" name="login">
@@ -80,6 +85,7 @@
                   color="primary"
                   label="Log in"
                   no-caps
+                  @click="onLogIn()"
                 />
               </div>
             </q-card-section>
@@ -161,6 +167,7 @@
                   color="primary"
                   label="Sign up"
                   no-caps
+                  @click="onRegistration()"
                 />
               </div>
             </q-card-section>
@@ -174,6 +181,7 @@
 <script>
 import { ref } from "vue";
 import { api } from "boot/axios";
+import { useStore } from "vuex";
 
 export default {
   name: "PageIndex",
@@ -185,20 +193,22 @@ export default {
     const fullNameRegister = ref("");
     const passwordRegister = ref("");
     const rePasswordRegister = ref("");
-    
-    
-    const tabs = ref("signup");
+
+    const store = useStore();
+
+    const tabs = ref("login");
     const rememberMe = ref(false);
-    return { 
-      password, 
-      username, 
-      rememberMe, 
-      tabs, 
-      usernameRegister, 
-      emailRegister, 
-      fullNameRegister, 
-      passwordRegister, 
+    return {
+      password,
+      username,
+      rememberMe,
+      tabs,
+      usernameRegister,
+      emailRegister,
+      fullNameRegister,
+      passwordRegister,
       rePasswordRegister,
+      store,
 
       required(val) {
         return new Promise((resolve) => {
@@ -206,9 +216,13 @@ export default {
         });
       },
       isPassword(val) {
-        const passwordRegex =  /^(?=.*[0-9])(?=.*[!@#$%^&*:])[a-zA-Z0-9!@#$%^&*:]{7,15}$/; 
+        const passwordRegex =
+          /^(?=.*[0-9])(?=.*[!@#$%^&*:])[a-zA-Z0-9!@#$%^&*:]{7,15}$/;
         return new Promise((resolve) => {
-          resolve(passwordRegex.test(val) || "7 to 15 characters which contain at least one numeric digit and a special character" );
+          resolve(
+            passwordRegex.test(val) ||
+              "7 to 15 characters which contain at least one numeric digit and a special character"
+          );
         });
       },
       samePassword(val) {
@@ -231,16 +245,51 @@ export default {
       checkUsername(val) {
         return new Promise((resolve) => {
           api.get("checkusername/" + val).then((response) => {
-            resolve((!response.data) || "This username is taken");
+            resolve(!response.data || "This username is taken");
           });
         });
       },
       // checkUsernameCharacters(val){
       //   const usernameRegex = /^[A-Za-z0-9 ]+$/;
       //   return new Promise((resolve) => {
-      //     resolve(usernameRegex.test(val) || "Special characters aren't" );
+      //     resolve(usernameRegex.test(val) || "Special characters aren't allowed" );
       //   })
       // }
+      onLogIn() {
+        const logIn = {
+          credentials: {
+            identifier: username.value,
+            password: password.value,
+          },
+          keepMe: rememberMe.value,
+        };
+
+        store
+          .dispatch("dvgchat/authRequest", logIn)
+          .then((response) => {
+            console.log("response index.vue", response);
+          })
+          .catch((error) => {
+            console.log("error: ", error);
+          });
+      },
+
+      onRegistration() {
+        const registration = {
+          username: usernameRegister.value,
+          email: emailRegister.value,
+          password: passwordRegister.value,
+          name: fullNameRegister.value,
+        };
+        store
+          .dispatch("dvgchat/registerRequest", registration)
+          .then((response) => {
+            console.log("response index.vue", response);
+          })
+          .catch((error) => {
+            console.log("error: ", error);
+          });
+      },
     };
   },
 };
