@@ -182,12 +182,14 @@
 import { ref } from "vue";
 import { api } from "boot/axios";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 
 export default {
   name: "PageIndex",
   setup() {
-    const password = ref("");
-    const username = ref("");
+    const password = ref("test@2021");
+    const username = ref("test");
     const usernameRegister = ref("");
     const emailRegister = ref("");
     const fullNameRegister = ref("");
@@ -195,6 +197,8 @@ export default {
     const rePasswordRegister = ref("");
 
     const store = useStore();
+    const router = useRouter();
+    const quasar = useQuasar();
 
     const tabs = ref("login");
     const rememberMe = ref(false);
@@ -209,6 +213,8 @@ export default {
       passwordRegister,
       rePasswordRegister,
       store,
+      router,
+      quasar,
 
       required(val) {
         return new Promise((resolve) => {
@@ -268,9 +274,20 @@ export default {
           .dispatch("dvgchat/authRequest", logIn)
           .then((response) => {
             console.log("response index.vue", response);
+            quasar.notify({
+              type: "positive",
+              message: "You are logged in",
+              position: "bottom",
+            });
+            router.push("/chat");
           })
           .catch((error) => {
             console.log("error: ", error);
+            quasar.notify({
+              type: "negative",
+              message: error.response.data.message[0].messages[0].message,
+              position: "bottom",
+            });
           });
       },
 
@@ -285,9 +302,19 @@ export default {
           .dispatch("dvgchat/registerRequest", registration)
           .then((response) => {
             console.log("response index.vue", response);
+            quasar.notify({
+              type: "positive",
+              message: "You have been registered, you can log in now",
+              position: "bottom",
+            });
           })
           .catch((error) => {
             console.log("error: ", error);
+            quasar.notify({
+              type: "positive",
+              message: "An error occured, try again",
+              position: "bottom",
+            });
           });
       },
     };
