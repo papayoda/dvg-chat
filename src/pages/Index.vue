@@ -61,9 +61,17 @@
                 v-model="password"
                 placeholder="Password"
                 :rules="[required]"
+                :type="visibility ? 'password' : 'text'"
               >
                 <template v-slot:before>
                   <q-icon name="lock" />
+                </template>
+                <template v-slot:append>
+                  <q-icon
+                    :name="visibility ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="visibility = !visibility"
+                  />
                 </template>
               </q-input>
             </q-card-section>
@@ -135,15 +143,24 @@
                   <q-icon name="text_fields" />
                 </template>
               </q-input>
+
               <q-input
                 class="q-pa-sm"
                 bottom-slots
                 v-model="passwordRegister"
                 :rules="[required, isPassword]"
                 placeholder="Password"
+                :type="visibilityRegister ? 'password' : 'text'"
               >
                 <template v-slot:before>
                   <q-icon name="lock" />
+                </template>
+                <template v-slot:append>
+                  <q-icon
+                    :name="visibilityRegister ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="visibilityRegister = !visibilityRegister"
+                  />
                 </template>
               </q-input>
               <q-input
@@ -152,9 +169,19 @@
                 v-model="rePasswordRegister"
                 :rules="[required, samePassword]"
                 placeholder="Retype Password"
+                :type="visibilityRePassword ? 'password' : 'text'"
               >
                 <template v-slot:before>
                   <q-icon name="lock" />
+                </template>
+                <template v-slot:append>
+                  <q-icon
+                    :name="
+                      visibilityRePassword ? 'visibility_off' : 'visibility'
+                    "
+                    class="cursor-pointer"
+                    @click="visibilityRePassword = !visibilityRePassword"
+                  />
                 </template>
               </q-input>
             </q-card-section>
@@ -195,6 +222,11 @@ export default {
     const fullNameRegister = ref("");
     const passwordRegister = ref("");
     const rePasswordRegister = ref("");
+    const passwordFieldType = ref("password");
+    const visibilityIcon = "visibility";
+    const visibility = ref(true);
+    const visibilityRegister = ref(true);
+    const visibilityRePassword = ref(true);
 
     const store = useStore();
     const router = useRouter();
@@ -215,6 +247,11 @@ export default {
       store,
       router,
       quasar,
+      passwordFieldType,
+      visibilityIcon,
+      visibility,
+      visibilityRegister,
+      visibilityRePassword,
 
       required(val) {
         return new Promise((resolve) => {
