@@ -18,8 +18,8 @@ export function authRequest({ commit, dispatch }, logIn) {
         resolve("The user is logged in");
       })
       .catch((error) => {
-        console.log("error: ", error);
-        reject("error");
+        // console.log("error: ", error);
+        reject(error);
       });
   });
 }
