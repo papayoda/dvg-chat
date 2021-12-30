@@ -337,7 +337,7 @@ export default {
             quasar.notify({
               type: "positive",
               message: "You are logged in",
-              position: "bottom",
+              position: "top",
             });
             router.push("/chat");
           })
@@ -345,8 +345,8 @@ export default {
             console.log("error: ", error);
             quasar.notify({
               type: "negative",
-              message: error.response.data.message[0].messages[0].message,
-              position: "bottom",
+              message: "Please provide your username and password",
+              position: "top",
             });
           });
       },
@@ -365,15 +365,15 @@ export default {
             quasar.notify({
               type: "positive",
               message: "You have been registered, you can log in now",
-              position: "bottom",
+              position: "top",
             });
           })
           .catch((error) => {
             console.log("error: ", error);
             quasar.notify({
-              type: "positive",
+              type: "negative",
               message: "An error occured, try again",
-              position: "bottom",
+              position: "top",
             });
           });
       },
