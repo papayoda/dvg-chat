@@ -37,3 +37,15 @@ export function registerRequest({ commit, dispatch }, registration) {
       });
   });
 }
+
+export function SOCKET_connected({ commit, dispatch }, data) {
+  console.log('Listener connected', data);
+}
+
+export function SOCKET_newMessage({ commit, dispatch }, data) {
+  console.log('Listener new message', data);
+}
+
+export function SOCKET_messages({ commit, dispatch }, data) {
+  console.log('Listener messages', data);
+}
