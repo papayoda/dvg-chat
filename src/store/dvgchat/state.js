@@ -1,7 +1,8 @@
 export default function () {
   return {
-    loggedIn: false, 
+    loggedIn: false,
     profile: {},
     token: "",
+    messages: []
   }
 }

@@ -44,8 +44,10 @@ export function SOCKET_connected({ commit, dispatch }, data) {
 
 export function SOCKET_newMessage({ commit, dispatch }, data) {
   console.log('Listener new message', data);
+  commit("addNewMessage", data);
 }
 
 export function SOCKET_messages({ commit, dispatch }, data) {
   console.log('Listener messages', data);
+  commit("setMessages", data);
 }
