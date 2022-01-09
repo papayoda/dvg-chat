@@ -83,13 +83,18 @@ export default {
       profile,
       messages,
       onClick() {
-        const message = {
-          timestamp: new Date(),
-          userId: profile.value.id,
-          message: text.value,
-        };
-        socket.emit("sendMessage", message);
-        text.value = "";
+        if (text.value === "!clean") {
+          socket.emit("clearMessages");
+          text.value = "";
+        } else {
+          const message = {
+            timestamp: new Date(),
+            userId: profile.value.id,
+            message: text.value,
+          };
+          socket.emit("sendMessage", message);
+          text.value = "";
+        }
       },
     };
   },

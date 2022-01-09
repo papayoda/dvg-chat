@@ -35,191 +35,195 @@
           </q-tabs>
           <q-tab-panels v-model="tabs" animated>
             <q-tab-panel class="no-padding opacity" name="login">
-              <q-card-section class="flex flex-center">
-                <q-avatar
-                  color
-                  class="bg-animation3"
-                  text-color="white"
-                  size="6rem"
-                  font-size="8rem"
-                  icon="person"
-                />
-              </q-card-section>
-              <q-card-section>
-                <q-input
-                  class="q-pa-sm"
-                  bottom-slots
-                  color="white"
-                  label-color="white"
-                  dark
-                  v-model="username"
-                  placeholder="Username"
-                  :rules="[required]"
-                >
-                  <template v-slot:before>
-                    <q-icon name="person" color="white" />
-                  </template>
-                </q-input>
-                <q-input
-                  class="q-pa-sm"
-                  bottom-slots
-                  dark
-                  v-model="password"
-                  placeholder="Password"
-                  color="white"
-                  :rules="[required]"
-                  :type="visibility ? 'password' : 'text'"
-                >
-                  <template v-slot:before>
-                    <q-icon name="lock" color="white" />
-                  </template>
-                  <template v-slot:append>
-                    <q-icon
-                      :name="visibility ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="visibility = !visibility"
-                    />
-                  </template>
-                </q-input>
-              </q-card-section>
-              <q-card-section>
-                <q-checkbox
-                  class="q-pa-sm text-white"
-                  size="xs"
-                  dark
-                  v-model="rememberMe"
-                  val="xs"
-                  label="Remember me"
-                  color="dark"
-                />
-              </q-card-section>
-              <q-card-section class="flex flex-center">
-                <div class="flex flex-center" style="width: 40%">
-                  <q-btn
-                    class="full-width bg-animation2"
-                    unelevated
-                    rounded
+              <q-form @submit="onLogIn">
+                <q-card-section class="flex flex-center">
+                  <q-avatar
+                    color
+                    class="bg-animation3"
                     text-color="white"
-                    label="Log in"
-                    no-caps
-                    @click="onLogIn()"
+                    size="6rem"
+                    font-size="8rem"
+                    icon="person"
                   />
-                </div>
-              </q-card-section>
+                </q-card-section>
+                <q-card-section>
+                  <q-input
+                    class="q-pa-sm"
+                    bottom-slots
+                    color="white"
+                    label-color="white"
+                    dark
+                    v-model="username"
+                    placeholder="Username"
+                    :rules="[required]"
+                  >
+                    <template v-slot:before>
+                      <q-icon name="person" color="white" />
+                    </template>
+                  </q-input>
+                  <q-input
+                    class="q-pa-sm"
+                    bottom-slots
+                    dark
+                    v-model="password"
+                    placeholder="Password"
+                    color="white"
+                    :rules="[required]"
+                    :type="visibility ? 'password' : 'text'"
+                  >
+                    <template v-slot:before>
+                      <q-icon name="lock" color="white" />
+                    </template>
+                    <template v-slot:append>
+                      <q-icon
+                        :name="visibility ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="visibility = !visibility"
+                      />
+                    </template>
+                  </q-input>
+                </q-card-section>
+                <q-card-section>
+                  <q-checkbox
+                    class="q-pa-sm text-white"
+                    size="xs"
+                    dark
+                    v-model="rememberMe"
+                    val="xs"
+                    label="Remember me"
+                    color="dark"
+                  />
+                </q-card-section>
+                <q-card-section class="flex flex-center">
+                  <div class="flex flex-center" style="width: 40%">
+                    <q-btn
+                      class="full-width bg-animation2"
+                      unelevated
+                      rounded
+                      text-color="white"
+                      label="Log in"
+                      no-caps
+                      type="submit"
+                    />
+                  </div>
+                </q-card-section>
+              </q-form>
             </q-tab-panel>
 
             <q-tab-panel class="no-padding opacity" name="signup">
-              <q-card-section class="flex flex-center">
-                <q-avatar
-                  color
-                  class="bg-animation3"
-                  text-color="white"
-                  size="6rem"
-                  font-size="8rem"
-                  icon="person"
-                />
-              </q-card-section>
-              <q-card-section>
-                <q-input
-                  class="q-pa-sm"
-                  bottom-slots
-                  dark
-                  v-model="usernameRegister"
-                  :rules="[required, shortUser, checkUsername]"
-                  placeholder="Username"
-                  color="white"
-                >
-                  <template v-slot:before>
-                    <q-icon name="person" color="white" />
-                  </template>
-                </q-input>
-                <q-input
-                  class="q-pa-sm"
-                  bottom-slots
-                  dark
-                  v-model="emailRegister"
-                  :rules="[required, isEmail]"
-                  placeholder="Email"
-                  color="white"
-                >
-                  <template v-slot:before>
-                    <q-icon name="email" color="white" />
-                  </template>
-                </q-input>
-                <q-input
-                  class="q-pa-sm"
-                  bottom-slots
-                  dark
-                  v-model="fullNameRegister"
-                  :rules="[required]"
-                  placeholder="Full Name"
-                  color="white"
-                >
-                  <template v-slot:before>
-                    <q-icon name="text_fields" color="white" />
-                  </template>
-                </q-input>
-
-                <q-input
-                  class="q-pa-sm"
-                  bottom-slots
-                  dark
-                  v-model="passwordRegister"
-                  :rules="[required, isPassword]"
-                  placeholder="Password"
-                  color="white"
-                  :type="visibilityRegister ? 'password' : 'text'"
-                >
-                  <template v-slot:before>
-                    <q-icon name="lock" color="white" />
-                  </template>
-                  <template v-slot:append>
-                    <q-icon
-                      :name="
-                        visibilityRegister ? 'visibility_off' : 'visibility'
-                      "
-                      class="cursor-pointer"
-                      @click="visibilityRegister = !visibilityRegister"
-                    />
-                  </template>
-                </q-input>
-                <q-input
-                  class="q-pa-sm"
-                  bottom-slots
-                  dark
-                  v-model="rePasswordRegister"
-                  :rules="[required, samePassword]"
-                  placeholder="Retype Password"
-                  color="white"
-                  :type="visibilityRePassword ? 'password' : 'text'"
-                >
-                  <template v-slot:before>
-                    <q-icon name="lock" color="white" />
-                  </template>
-                  <template v-slot:append>
-                    <q-icon
-                      :name="
-                        visibilityRePassword ? 'visibility_off' : 'visibility'
-                      "
-                      class="cursor-pointer"
-                      @click="visibilityRePassword = !visibilityRePassword"
-                    />
-                  </template>
-                </q-input>
-              </q-card-section>
-              <q-card-section class="flex flex-center">
-                <div class="flex flex-center" style="width: 40%">
-                  <q-btn
-                    class="full-width bg-animation2"
-                    unelevated
-                    rounded
+              <q-form @submit="onRegistration">
+                <q-card-section class="flex flex-center">
+                  <q-avatar
+                    color
+                    class="bg-animation3"
                     text-color="white"
-                    label="Sign up"
-                    no-caps
-                    @click="onRegistration()"
+                    size="6rem"
+                    font-size="8rem"
+                    icon="person"
                   />
-                </div>
-              </q-card-section>
+                </q-card-section>
+                <q-card-section>
+                  <q-input
+                    class="q-pa-sm"
+                    bottom-slots
+                    dark
+                    v-model="usernameRegister"
+                    :rules="[required, shortUser, checkUsername]"
+                    placeholder="Username"
+                    color="white"
+                  >
+                    <template v-slot:before>
+                      <q-icon name="person" color="white" />
+                    </template>
+                  </q-input>
+                  <q-input
+                    class="q-pa-sm"
+                    bottom-slots
+                    dark
+                    v-model="emailRegister"
+                    :rules="[required, isEmail]"
+                    placeholder="Email"
+                    color="white"
+                  >
+                    <template v-slot:before>
+                      <q-icon name="email" color="white" />
+                    </template>
+                  </q-input>
+                  <q-input
+                    class="q-pa-sm"
+                    bottom-slots
+                    dark
+                    v-model="fullNameRegister"
+                    :rules="[required]"
+                    placeholder="Full Name"
+                    color="white"
+                  >
+                    <template v-slot:before>
+                      <q-icon name="text_fields" color="white" />
+                    </template>
+                  </q-input>
+
+                  <q-input
+                    class="q-pa-sm"
+                    bottom-slots
+                    dark
+                    v-model="passwordRegister"
+                    :rules="[required, isPassword]"
+                    placeholder="Password"
+                    color="white"
+                    :type="visibilityRegister ? 'password' : 'text'"
+                  >
+                    <template v-slot:before>
+                      <q-icon name="lock" color="white" />
+                    </template>
+                    <template v-slot:append>
+                      <q-icon
+                        :name="
+                          visibilityRegister ? 'visibility_off' : 'visibility'
+                        "
+                        class="cursor-pointer"
+                        @click="visibilityRegister = !visibilityRegister"
+                      />
+                    </template>
+                  </q-input>
+                  <q-input
+                    class="q-pa-sm"
+                    bottom-slots
+                    dark
+                    v-model="rePasswordRegister"
+                    :rules="[required, samePassword]"
+                    placeholder="Retype Password"
+                    color="white"
+                    :type="visibilityRePassword ? 'password' : 'text'"
+                  >
+                    <template v-slot:before>
+                      <q-icon name="lock" color="white" />
+                    </template>
+                    <template v-slot:append>
+                      <q-icon
+                        :name="
+                          visibilityRePassword ? 'visibility_off' : 'visibility'
+                        "
+                        class="cursor-pointer"
+                        @click="visibilityRePassword = !visibilityRePassword"
+                      />
+                    </template>
+                  </q-input>
+                </q-card-section>
+                <q-card-section class="flex flex-center">
+                  <div class="flex flex-center" style="width: 40%">
+                    <q-btn
+                      class="full-width bg-animation2"
+                      unelevated
+                      rounded
+                      text-color="white"
+                      label="Sign up"
+                      no-caps
+                      type="submit"
+                    />
+                  </div>
+                </q-card-section>
+              </q-form>
             </q-tab-panel>
           </q-tab-panels>
         </q-card-section>
@@ -367,6 +371,13 @@ export default {
               message: "You have been registered, you can log in now",
               position: "top",
             });
+            tabs.value = "login";
+            username.value = usernameRegister.value;
+            usernameRegister.value = "";
+            password.value = passwordRegister.value;
+            passwordRegister.value = "";
+            emailRegister.value = "";
+            fullNameRegister.value = "";
           })
           .catch((error) => {
             console.log("error: ", error);
