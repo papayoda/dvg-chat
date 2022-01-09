@@ -1,12 +1,13 @@
 import { api } from "boot/axios";
+import { Loading } from 'quasar'
 
 export function init({ commit, dispatch, state }, val) {
   return new Promise((resolve, reject) => {
-    //Loading.show()
+    Loading.show()
     const token = localStorage.getItem('token')
     //console.log('token :', token)
     if (token) {
-      console.log("mphka apo edw")
+      Loading.show()
       const vm = this
       api.get("/users/me", { headers: { "Authorization": `Bearer ${token}` } })
         .then((response) => {
@@ -15,7 +16,7 @@ export function init({ commit, dispatch, state }, val) {
           // console.log("Logged In", state.loggedIn)
           commit("setProfile", response.data);
           commit("setToken", token);
-          //Loading.hide()
+          Loading.hide()
           vm.$router.push('/chat')
           resolve('user re-logged in')
         })
@@ -27,7 +28,7 @@ export function init({ commit, dispatch, state }, val) {
         })
     } else {
       vm.$router.push('/')
-      //Loading.hide()
+      Loading.hide()
       resolve('user isnt authneticated');
     }
   })
