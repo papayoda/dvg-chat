@@ -371,6 +371,13 @@ export default {
               message: "You have been registered, you can log in now",
               position: "top",
             });
+            tabs.value = "login";
+            username.value = usernameRegister.value;
+            usernameRegister.value = "";
+            password.value = passwordRegister.value;
+            passwordRegister.value = "";
+            emailRegister.value = "";
+            fullNameRegister.value = "";
           })
           .catch((error) => {
             console.log("error: ", error);

@@ -20,8 +20,8 @@ export default route(function ({ store, ssrContext }) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-    ? createWebHistory
-    : createWebHashHistory;
+      ? createWebHistory
+      : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -32,6 +32,7 @@ export default route(function ({ store, ssrContext }) {
   });
 
   Router.beforeEach((to, from, next) => {
+    console.log("eimai ston Router")
     const publicPages = ["/"];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = store.getters["dvgchat/getLoggedIn"];
