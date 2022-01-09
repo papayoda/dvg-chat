@@ -1,24 +1,31 @@
 <template>
   <q-page padding>
-    <div class="column">
-      <div class="row">
-        <ul>
-          <li v-for="message in messages" :key="message">
-            timestamp: {{ message.timestamp }}, userId: {{ message.userId }},
-            message: {{ message.message }}
-          </li>
-        </ul>
-        <!-- {{ messages }} -->
-      </div>
+    <div class="row">
+      <ul>
+        <li v-for="message in messages" :key="message">
+          timestamp: {{ message.timestamp }}, userId: {{ message.userId }},
+          message: {{ message.message }}
+        </li>
+      </ul>
+      <!-- {{ messages }} -->
+    </div>
+    <q-form @submit="onClick">
       <div class="row">
         <div class="col-6">
           <q-input v-model="text" type="text" label="Label" />
         </div>
         <div class="col-6">
-          <q-btn color="primary" icon="check" label="OK" @click="onClick" />
+          <q-btn
+            color="primary"
+            icon="check"
+            label="Send"
+            :disable="text.length === 0"
+            type="sumbit"
+            no-caps
+          />
         </div>
       </div>
-    </div>
+    </q-form>
   </q-page>
 </template>
 
@@ -45,13 +52,18 @@ export default {
       profile,
       messages,
       onClick() {
-        const message = {
-          timestamp: new Date(),
-          userId: profile.value.id,
-          message: text.value,
-        };
-        socket.emit("sendMessage", message);
-        text.value = "";
+        if (text.value === "!clean") {
+          socket.emit("clearMessages");
+          text.value = "";
+        } else {
+          const message = {
+            timestamp: new Date(),
+            userId: profile.value.id,
+            message: text.value,
+          };
+          socket.emit("sendMessage", message);
+          text.value = "";
+        }
       },
     };
   },
