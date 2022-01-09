@@ -1,31 +1,62 @@
 <template>
-  <q-page padding>
-    <div class="row">
-      <ul>
-        <li v-for="message in messages" :key="message">
-          timestamp: {{ message.timestamp }}, userId: {{ message.userId }},
-          message: {{ message.message }}
-        </li>
-      </ul>
-      <!-- {{ messages }} -->
+  <q-page padding class="flex flex-center bg-animation">
+    <div class="flex fixed-right">
+      <q-btn
+        class="overflow-hidden"
+        flat
+        text-color="black"
+        label="Log out"
+        style="height: 2vh"
+        no-caps
+      />
     </div>
-    <q-form @submit="onClick">
-      <div class="row">
-        <div class="col-6">
-          <q-input v-model="text" type="text" label="Label" />
+    <q-card
+      class="my-card"
+      dark
+      style="
+        border-radius: 40px;
+        width: 90vw;
+        min-height: 40vw;
+        max-height: 200vw;
+        min-width: 300px;
+        max-width: 1000px;
+      "
+    >
+      <div class="text-h6 absolute-top text-center">DVG Chat</div>
+      <div class="flex column q-pt-md">
+        <div class="row">
+          <q-card-section class="flex" style="height: 20vw">
+            <q-scroll-area style="width: 960px; height: calc(74vh - 50px)">
+              <ul>
+                <li v-for="message in messages" :key="message">
+                  timestamp: {{ message.timestamp }}, userId:
+                  {{ message.userId }}, message: {{ message.message }}
+                </li>
+              </ul>
+              <!-- {{ messages }} -->
+            </q-scroll-area>
+          </q-card-section>
         </div>
-        <div class="col-6">
-          <q-btn
-            color="primary"
-            icon="check"
-            label="Send"
-            :disable="text.length === 0"
-            type="sumbit"
-            no-caps
-          />
+        <div class="row">
+          <div class="flex col-6 q-pl-lg q-pb-md absolute-bottom">
+            <q-input
+              dark
+              rounded
+              outlined
+              v-model="text"
+              type="text"
+              color="white"
+              style="min-width: 900px"
+              placeholder="Type your message here"
+              dense
+            />
+          </div>
+          <div class="flex q-pb-md absolute-bottom-right">
+            <q-btn flat rounded color="white" icon="send" @click="onClick" />
+          </div>
         </div>
       </div>
-    </q-form>
+    </q-card>
   </q-page>
 </template>
 
@@ -69,3 +100,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.q-btn {
+  display: inline;
+  text-decoration: none;
+}
+</style>
