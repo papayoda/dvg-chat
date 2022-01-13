@@ -6,9 +6,9 @@
         <div class="col-10"></div>
         <div class="col-2">
           <q-btn
-            color="primary"
-            icon="check"
-            label="OK"
+            color="white"
+            text-color="dark"
+            label="Log out"
             @click="logOut()"
             no-caps
           />
@@ -48,6 +48,7 @@
                     color="white"
                     placeholder="Type your message here"
                     dark
+                    dense
                   >
                     <template v-slot:append>
                       <q-icon

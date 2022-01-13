@@ -133,7 +133,12 @@
                     bottom-slots
                     dark
                     v-model="usernameRegister"
-                    :rules="[required, shortUser, checkUsername]"
+                    :rules="[
+                      required,
+                      shortUser,
+                      checkUsername,
+                      checkUsernameCharacters,
+                    ]"
                     placeholder="Username"
                     color="white"
                   >
@@ -292,11 +297,11 @@ export default {
       },
       isPassword(val) {
         const passwordRegex =
-          /^(?=.*[0-9])(?=.*[!@#$%^&*:])[a-zA-Z0-9!@#$%^&*:]{7,15}$/;
+          /^(?=.*[0-9])(?=.*[!@#$%^&*+:])[a-zA-Z0-9!@#$%^&*+:]{7,}$/;
         return new Promise((resolve) => {
           resolve(
             passwordRegex.test(val) ||
-              "7 to 15 characters which contain at least one numeric digit and a special character"
+              "7 characters minimum which contain at least one numeric digit and a special character"
           );
         });
       },
@@ -324,12 +329,14 @@ export default {
           });
         });
       },
-      // checkUsernameCharacters(val){
-      //   const usernameRegex = /^[A-Za-z0-9 ]+$/;
-      //   return new Promise((resolve) => {
-      //     resolve(usernameRegex.test(val) || "Special characters aren't allowed" );
-      //   })
-      // }
+      checkUsernameCharacters(val) {
+        const usernameRegex = /^[A-Za-z0-9 ]+$/;
+        return new Promise((resolve) => {
+          resolve(
+            usernameRegex.test(val) || "Special characters aren't allowed"
+          );
+        });
+      },
       onLogIn() {
         const logIn = {
           credentials: {
