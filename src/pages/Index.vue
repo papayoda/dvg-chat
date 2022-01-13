@@ -1,8 +1,9 @@
 <template>
   <q-layout>
-    <q-page class="flex flex-center bg-animation">
+    <q-page class="flex flex-center bg-animation opacity">
       <q-card
         class="my-card"
+        dark
         style="
           border-radius: 40px;
           width: 30vw;
@@ -14,7 +15,7 @@
           <q-tabs
             v-model="tabs"
             dense
-            class="text-white"
+            class="text-white opacity"
             active-color="white"
             indicator-color="white"
             align="justify"
@@ -33,8 +34,12 @@
               style="border-radius: 40px"
             />
           </q-tabs>
-          <q-tab-panels v-model="tabs" animated>
-            <q-tab-panel class="no-padding opacity" name="login">
+          <q-tab-panels
+            v-model="tabs"
+            animated
+            style="background-color: rgba(0, 0, 0, 0)"
+          >
+            <q-tab-panel class="no-padding" name="login">
               <q-form @submit="onLogIn">
                 <q-card-section class="flex flex-center">
                   <q-avatar

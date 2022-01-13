@@ -3,6 +3,11 @@ export default function () {
     loggedIn: false,
     profile: {},
     token: "",
-    messages: []
+    messages: [{
+      timestamp: 0,
+      userId: 0,
+      message: [""],
+      username: "",
+    }]
   }
 }

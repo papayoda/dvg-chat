@@ -27,7 +27,6 @@ export function init({ commit, dispatch, state }, val) {
           //console.log("An error occurred:", error.response);
         })
     } else {
-      vm.$router.push('/')
       Loading.hide()
       resolve('user isnt authneticated');
     }
@@ -69,6 +68,13 @@ export function registerRequest({ commit, dispatch }, registration) {
         reject(error);
       });
   });
+}
+
+export function logout({ commit, dispatch }, user) {
+  return new Promise((resolve, reject) => {
+    commit('removeUser')
+    resolve('user removed')
+  })
 }
 
 export function SOCKET_connected({ commit, dispatch }, data) {

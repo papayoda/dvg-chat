@@ -13,3 +13,15 @@ export function setMessages(state, data) {
 export function addNewMessage(state, data) {
   state.messages.push(data);
 }
+export function removeUser(state) {
+  localStorage.removeItem('token')
+  state.loggedIn = false;
+  state.profile = {};
+  state.token = "";
+  state.messages = [{
+    timestamp: 0,
+    userId: 0,
+    message: [""],
+    username: "",
+  }];
+}

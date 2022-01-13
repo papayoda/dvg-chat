@@ -1,83 +1,141 @@
 <template>
   <q-page padding class="flex flex-center bg-animation">
-    <q-card dark style="border-radius: 40px">
-      <div class="text-h6 row flex-center">DVG Chat</div>
-      <div class="flex column q-pt-md">
-        <div class="row">
-          <q-card-section class="flex" style="height: 20vw">
-            <q-scroll-area style="width: 960px; height: calc(74vh - 50px)">
-              <ul>
-                <li v-for="message in messages" :key="message">
-                  timestamp: {{ message.timestamp }}, userId:
-                  {{ message.userId }}, message: {{ message.message }}
-                </li>
-              </ul>
-              <!-- {{ messages }} -->
-            </q-scroll-area>
-          </q-card-section>
+    <!-- {{ messages }} -->
+    <div class="column">
+      <div class="row">
+        <div class="col-10"></div>
+        <div class="col-2">
+          <q-btn
+            color="primary"
+            icon="check"
+            label="OK"
+            @click="logOut()"
+            no-caps
+          />
         </div>
-        <q-form @submit="onClick">
-          <div class="row">
-            <div class="flex col-11 q-pl-lg q-pb-md">
-              <q-input
-                class="full-width"
-                dark
-                rounded
-                outlined
-                v-model="text"
-                type="text"
-                color="white"
-                placeholder="Type your message here"
-                dense
-              />
-            </div>
-            <div class="flex q-pb-md col-1">
-              <q-btn flat rounded color="white" icon="send" type="submit" />
-            </div>
-          </div>
-        </q-form>
       </div>
-    </q-card>
+      <div class="row">
+        <q-card class="chat-card" dark style="border-radius: 40px">
+          <div class="flex column q-pt-md">
+            <q-card-section>
+              <div class="text-h6 row flex-center">DVG Chat</div>
+            </q-card-section>
+            <q-card-section>
+              <q-scroll-area class="scroll-area-chat" ref="scroller" dark>
+                <div v-for="message in messages" :key="message">
+                  <q-chat-message
+                    v-if="message.message != ''"
+                    :name="
+                      message.userId === profile.id ? 'me' : message.username
+                    "
+                    :text="message.message"
+                    :stamp="returnDate(message.timestamp)"
+                    :sent="message.userId === profile.id ? true : false"
+                    class="q-pl-lg q-pr-lg"
+                  />
+                </div>
+              </q-scroll-area>
+            </q-card-section>
+            <q-card-section class="full-width">
+              <div class="row full-width">
+                <q-form class="col-12" @submit="onClick()">
+                  <q-input
+                    rounded
+                    outlined
+                    standout
+                    bottom-slots
+                    v-model="text"
+                    color="white"
+                    placeholder="Type your message here"
+                    dark
+                  >
+                    <template v-slot:append>
+                      <q-icon
+                        name="send"
+                        @click="onClick()"
+                        class="cursor-pointer"
+                      />
+                    </template>
+                  </q-input>
+                </q-form>
+              </div>
+            </q-card-section>
+          </div>
+        </q-card>
+      </div>
+    </div>
   </q-page>
 </template>
 
 <script>
-import { ref, computed, inject } from "vue";
+import { ref, computed, inject, watch } from "vue";
 import { useStore } from "vuex";
+import { date } from "quasar";
+import { useRouter } from "vue-router";
 export default {
   //name: 'PageName',
   setup() {
     const text = ref("");
     const store = useStore();
+    const router = useRouter();
     const socket = inject("socket");
+    const scroller = ref(null);
     const profile = computed({
       get: () => store.state.dvgchat.profile,
     });
     const messages = computed({
       get: () => store.state.dvgchat.messages,
     });
+    watch(
+      () => messages.value.length,
+      (currentValue, oldValue) => {
+        // console.log("calc", calc_messages.value.id);
+        console.log("Current value:", currentValue);
+        console.log("Old value:", oldValue);
+        setTimeout(() => {
+          scroller.value.setScrollPercentage("vertical", 1, 50);
+        }, 200);
+      }
+    );
     socket.emit("getMessages");
+    setTimeout(() => {
+      scroller.value.setScrollPercentage("vertical", 1, 0);
+    }, 200);
     return {
       text,
       store,
+      router,
       socket,
       profile,
       messages,
+      scroller,
       onClick() {
         if (text.value === "!clean") {
           socket.emit("clearMessages");
           text.value = "";
-        } else {
+        } else if (text.value != "") {
           const message = {
             timestamp: new Date(),
             userId: profile.value.id,
-            message: text.value,
+            message: [text.value],
+            username: profile.value.username,
           };
           socket.emit("sendMessage", message);
           text.value = "";
         }
       },
+      returnDate(dateValue) {
+        return date.formatDate(dateValue, "YYYY/MM/DD HH:mm:ss");
+      },
+      logOut() {
+        store.dispatch("dvgchat/logout").then(() => {
+          router.push("/");
+        });
+      },
     };
+  },
+  mounted() {
+    window.chat = this;
   },
 };
 </script>
