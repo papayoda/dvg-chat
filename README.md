@@ -1,4 +1,2 @@
 # DVG Chat
 
-dvgchat.eu
-
