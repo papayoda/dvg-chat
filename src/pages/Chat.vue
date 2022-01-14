@@ -1,7 +1,7 @@
 <template>
   <q-page padding class="flex flex-center">
     <div class="column">
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-10"></div>
         <div class="col-2">
           <q-btn
@@ -12,13 +12,10 @@
             no-caps
           />
         </div>
-      </div>
+      </div> -->
       <div class="row">
         <q-card class="chat-card" dark style="border-radius: 40px">
           <div class="flex column q-pt-md">
-            <q-card-section>
-              <div class="text-h6 row flex-center">DVG Chat</div>
-            </q-card-section>
             <q-card-section>
               <q-scroll-area class="scroll-area-chat" ref="scroller" dark>
                 <div v-for="message in messages" :key="message">
