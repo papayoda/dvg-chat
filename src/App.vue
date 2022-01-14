@@ -1,5 +1,5 @@
 <template>
-  <router-view />
+  <router-view class="bg-animation" />
 </template>
 <script>
 import { defineComponent } from "vue";

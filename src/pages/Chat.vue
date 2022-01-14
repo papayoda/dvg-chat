@@ -1,6 +1,5 @@
 <template>
-  <q-page padding class="flex flex-center bg-animation">
-    <!-- {{ messages }} -->
+  <q-page padding class="flex flex-center">
     <div class="column">
       <div class="row">
         <div class="col-10"></div>

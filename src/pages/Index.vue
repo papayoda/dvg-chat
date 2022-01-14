@@ -1,6 +1,6 @@
 <template>
   <q-layout>
-    <q-page class="flex flex-center bg-animation opacity">
+    <q-page class="flex flex-center opacity">
       <q-card
         class="my-card"
         dark

@@ -42,12 +42,12 @@
 }
 
 .scroll-area-chat {
-    width: 75vw;
-    min-width: 350px;
-    max-width: 950px;
-    height: calc(80vh - 200px);
-    min-height: 400px!important;
-    max-height: 800px!important;
+  width: 75vw;
+  min-width: 350px;
+  max-width: 950px;
+  height: calc(80vh - 135px);
+  min-height: 400px !important;
+  max-height: 800px !important;
 }
 
 @keyframes gradient {
