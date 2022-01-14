@@ -1,18 +1,6 @@
 <template>
   <q-page padding class="flex flex-center">
     <div class="column">
-      <!-- <div class="row">
-        <div class="col-10"></div>
-        <div class="col-2">
-          <q-btn
-            color="white"
-            text-color="dark"
-            label="Log out"
-            @click="logOut()"
-            no-caps
-          />
-        </div>
-      </div> -->
       <div class="row">
         <q-card class="chat-card" dark style="border-radius: 40px">
           <div class="flex column q-pt-md">
@@ -123,11 +111,6 @@ export default {
       },
       returnDate(dateValue) {
         return date.formatDate(dateValue, "YYYY/MM/DD HH:mm:ss");
-      },
-      logOut() {
-        store.dispatch("dvgchat/logout").then(() => {
-          router.push("/");
-        });
       },
     };
   },

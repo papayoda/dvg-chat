@@ -15,6 +15,11 @@ const routes = [
     path: "/:catchAll(.*)*",
     component: () => import("pages/Error404.vue"),
   },
+  {
+    path: "/settings",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/Settings.vue") }],
+  }
 ];
 
 export default routes;
