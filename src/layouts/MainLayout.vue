@@ -3,7 +3,7 @@
     <q-header class="bg-transparent">
       <q-toolbar class="flex">
         <div class="col-4"></div>
-        <div class="col-4 text-center text-h5">DVG Chat</div>
+        <div class="col-4 text-center text-h6">DVG Chat</div>
         <div class="col-4">
           <q-btn
             class="float-right"

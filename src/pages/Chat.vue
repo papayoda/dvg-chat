@@ -32,7 +32,6 @@
                     color="white"
                     placeholder="Type your message here"
                     dark
-                    dense
                   >
                     <template v-slot:append>
                       <q-icon
