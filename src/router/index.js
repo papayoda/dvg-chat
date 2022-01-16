@@ -32,7 +32,6 @@ export default route(function ({ store, ssrContext }) {
   });
 
   Router.beforeEach((to, from, next) => {
-    console.log("eimai ston Router")
     const publicPages = ["/"];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = store.getters["dvgchat/getLoggedIn"];

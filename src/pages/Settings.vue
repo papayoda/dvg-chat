@@ -3,56 +3,71 @@
     <div class="column">
       <div class="row">
         <q-card class="settings-card" dark style="border-radius: 40px">
-          <div class="flex column q-pt-md">
+          <div class="flex column q-pt-md flex flex-center q-pa-md">
             <q-card-section>
-              <q-input
-                class="q-pa-sm"
-                bottom-slots
-                dark
-                v-model="password"
-                placeholder="Password"
-                color="white"
-                :type="visibilityPassword ? 'password' : 'text'"
-              >
-                <template v-slot:before>
-                  <q-icon name="lock" color="white" />
-                </template>
-                <template v-slot:append>
-                  <q-icon
-                    :name="visibilityPassword ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="visibilityPassword = !visibilityPassword"
-                  />
-                </template>
-              </q-input>
-              <q-input
-                class="q-pa-sm"
-                bottom-slots
-                dark
-                v-model="rePassword"
-                placeholder="Retype Password"
-                color="white"
-                :type="visibilityRePassword ? 'password' : 'text'"
-              >
-                <template v-slot:before>
-                  <q-icon name="lock" color="white" />
-                </template>
-                <template v-slot:append>
-                  <q-icon
-                    :name="
-                      visibilityRePassword ? 'visibility_off' : 'visibility'
-                    "
-                    class="cursor-pointer"
-                    @click="visibilityRePassword = !visibilityRePassword"
-                  />
-                </template>
-              </q-input>
-              <q-btn
-                color="primary"
-                label="Change Password"
-                @click="changePassword()"
-              />
+              <div class="text-h6">Change your password</div>
             </q-card-section>
+            <q-form @submit="changePassword()" class="q-gutter-md">
+              <q-card-section class="flex flex-center">
+                <q-input
+                  class="q-pa-sm"
+                  bottom-slots
+                  dark
+                  v-model="password"
+                  placeholder="Password"
+                  color="white"
+                  :type="visibilityPassword ? 'password' : 'text'"
+                >
+                  <template v-slot:before>
+                    <q-icon name="lock" color="white" />
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="
+                        visibilityPassword ? 'visibility_off' : 'visibility'
+                      "
+                      class="cursor-pointer"
+                      @click="visibilityPassword = !visibilityPassword"
+                    />
+                  </template>
+                </q-input>
+              </q-card-section>
+              <q-card-section>
+                <q-input
+                  class="q-pa-sm"
+                  bottom-slots
+                  dark
+                  v-model="rePassword"
+                  placeholder="Retype Password"
+                  color="white"
+                  :type="visibilityRePassword ? 'password' : 'text'"
+                >
+                  <template v-slot:before>
+                    <q-icon name="lock" color="white" />
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="
+                        visibilityRePassword ? 'visibility_off' : 'visibility'
+                      "
+                      class="cursor-pointer"
+                      @click="visibilityRePassword = !visibilityRePassword"
+                    />
+                  </template>
+                </q-input>
+              </q-card-section>
+              <q-card-section>
+                <q-btn
+                  no-caps
+                  label="Change Password"
+                  class="full-width bg-animation2"
+                  unelevated
+                  rounded
+                  text-color="white"
+                  type="submit"
+                />
+              </q-card-section>
+            </q-form>
           </div>
         </q-card>
       </div>
@@ -62,6 +77,7 @@
 
 <script>
 import { useStore } from "vuex";
+import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { ref, computed } from "vue";
 
@@ -71,6 +87,7 @@ export default {
     const rePassword = ref("");
     const store = useStore();
     const router = useRouter();
+    const q = useQuasar();
     const profile = computed({
       get: () => store.state.dvgchat.profile,
     });
@@ -83,10 +100,28 @@ export default {
       store,
       router,
       profile,
+      q,
       visibilityPassword,
       visibilityRePassword,
       changePassword() {
-        console.log("password: ", password.value);
+        let ch = {
+          password: password.value,
+        };
+        store.dispatch("dvgchat/updatePassword", ch)
+        .then((response) => {
+          q.notify({
+            color: "green",
+            message: "Your password is Updated",
+            position: "top",
+          });
+        })
+        .catch((error)=>{
+          q.notify({
+            color: "red",
+            message: "Your password is Updated",
+            position: "top",
+          });
+        })
       },
     };
   },

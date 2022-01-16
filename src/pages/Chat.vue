@@ -73,9 +73,6 @@ export default {
     watch(
       () => messages.value.length,
       (currentValue, oldValue) => {
-        // console.log("calc", calc_messages.value.id);
-        console.log("Current value:", currentValue);
-        console.log("Old value:", oldValue);
         setTimeout(() => {
           scroller.value.setScrollPercentage("vertical", 1, 50);
         }, 200);
@@ -99,7 +96,6 @@ export default {
           text.value = "";
         } else if (text.value != "") {
           const message = {
-            timestamp: new Date(),
             userId: profile.value.id,
             message: [text.value],
             username: profile.value.username,
