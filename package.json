@@ -1,8 +1,8 @@
 {
   "name": "dvg-chat",
   "version": "0.0.1",
-  "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "description": "A Messaging Web App",
+  "productName": "DVG Chat",
   "author": "papayoda <dim800vt@gmail.com>",
   "private": true,
   "scripts": {
