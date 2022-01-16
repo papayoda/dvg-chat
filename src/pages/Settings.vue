@@ -1,194 +1,128 @@
 <template>
-  <div class="col-4 text-center text-h4 text-white">Under Construction</div>
-  <!-- <div class="q-pa-md">
-    <div class="q-gutter-y-md column" style="max-width: 300px">
-      <q-toggle v-model="dense" label="Dense QInput" />
-
-      <q-input standout v-model="text" :dense="dense" />
-
-      <q-input
-        standout="bg-teal text-white"
-        v-model="text"
-        label="Custom standout"
-        :dense="dense"
-      />
-
-      <q-input
-        standout
-        v-model="text"
-        label="Label (stacked)"
-        stack-label
-        :dense="dense"
-      />
-
-      <q-input standout v-model="text" label="Label" :dense="dense" />
-
-      <q-input
-        standout
-        v-model="ph"
-        label="Label"
-        placeholder="Placeholder"
-        hint="With placeholder"
-        :dense="dense"
-      />
-
-      <q-input
-        standout
-        v-model="ph"
-        placeholdesettingsr="Placeholder"
-        hint="With placeholder"
-        :dense="dense"
-      />
-
-      <q-input
-        standout
-        square
-        v-model="text"
-        hint="With perfect square borders"
-        :dense="dense"
-      />
-
-      <q-input standout v-model="text" :dense="dense">
-        <template v-slot:prepend>
-          <q-icon name="event" />
-        </template>
-      </q-input>
-
-      <q-input standout v-model="text" :dense="dense">
-        <template v-slot:append>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg" />
-          </q-avatar>
-        </template>
-      </q-input>
-
-      <q-input
-        standout
-        bottom-slots
-        v-model="text"
-        label="Label"
-        counter
-        :dense="dense"
-      >
-        <template v-slot:prepend>
-          <q-icon name="place" />
-        </template>
-        <template v-slot:append>
-          <q-icon name="close" @click="text = ''" class="cursor-pointer" />
-        </template>
-
-        <template v-slot:hint> Field hint </template>
-      </q-input>
-
-      <q-input
-        standout
-        bottom-slots
-        v-model="text"
-        label="Label"
-        counter
-        maxlength="12"
-        :dense="dense"
-      >
-        <template v-slot:before>
-          <q-icon name="flight_takeoff" />
-        </template>
-
-        <template v-slot:append>
-          <q-icon
-            v-if="text !== ''"
-            name="close"
-            @click="text = ''"
-            class="cursor-pointer"
-          />
-          <q-icon name="search" />
-        </template>
-
-        <template v-slot:hint> Field hint </template>
-      </q-input>
-
-      <q-input
-        standout
-        bottom-slots
-        v-model="text"
-        label="Label"
-        counter
-        maxlength="12"
-        :dense="dense"
-      >
-        <template v-slot:before>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/img/avatar5.jpg" />
-          </q-avatar>
-        </template>
-
-        <template v-slot:append>
-          <q-icon
-            v-if="text !== ''"
-            name="close"
-            @click="text = ''"
-            class="cursor-pointer"
-          />
-          <q-icon name="schedule" />
-        </template>
-
-        <template v-slot:hint> Field hint </template>
-
-        <template v-slot:after>
-          <q-btn round dense flat icon="send" />
-        </template>
-      </q-input>
-
-      <q-input
-        standout
-        bottom-slots
-        v-model="text"
-        label="Label"
-        counter
-        maxlength="12"
-        :dense="dense"
-      >
-        <template v-slot:before>
-          <q-icon name="event" />
-        </template>
-
-        <template v-slot:hint> Field hint </template>
-
-        <template v-slot:append>
-          <q-btn round dense flat icon="add" />
-        </template>
-      </q-input>
-
-      <q-input standout v-model="text" hint="Disable" :dense="dense" disable />
-
-      <q-input
-        standout
-        v-model="text"
-        hint="Readonly"
-        :dense="dense"
-        readonly
-      />
-
-      <q-input
-        standout
-        v-model="text"
-        hint="Disable and readonly"
-        :dense="dense"
-        disable
-        readonly
-      />
+  <q-page padding class="flex flex-center">
+    <div class="column">
+      <div class="row">
+        <q-card class="settings-card" dark style="border-radius: 40px">
+          <div class="flex column q-pt-md flex flex-center q-pa-md">
+            <q-card-section>
+              <div class="text-h6">Change your password</div>
+            </q-card-section>
+            <q-form @submit="changePassword()" class="q-gutter-md">
+              <q-card-section class="flex flex-center">
+                <q-input
+                  class="q-pa-sm"
+                  bottom-slots
+                  dark
+                  v-model="password"
+                  placeholder="Password"
+                  color="white"
+                  :type="visibilityPassword ? 'password' : 'text'"
+                >
+                  <template v-slot:before>
+                    <q-icon name="lock" color="white" />
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="
+                        visibilityPassword ? 'visibility_off' : 'visibility'
+                      "
+                      class="cursor-pointer"
+                      @click="visibilityPassword = !visibilityPassword"
+                    />
+                  </template>
+                </q-input>
+              </q-card-section>
+              <q-card-section>
+                <q-input
+                  class="q-pa-sm"
+                  bottom-slots
+                  dark
+                  v-model="rePassword"
+                  placeholder="Retype Password"
+                  color="white"
+                  :type="visibilityRePassword ? 'password' : 'text'"
+                >
+                  <template v-slot:before>
+                    <q-icon name="lock" color="white" />
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="
+                        visibilityRePassword ? 'visibility_off' : 'visibility'
+                      "
+                      class="cursor-pointer"
+                      @click="visibilityRePassword = !visibilityRePassword"
+                    />
+                  </template>
+                </q-input>
+              </q-card-section>
+              <q-card-section>
+                <q-btn
+                  no-caps
+                  label="Change Password"
+                  class="full-width bg-animation2"
+                  unelevated
+                  rounded
+                  text-color="white"
+                  type="submit"
+                />
+              </q-card-section>
+            </q-form>
+          </div>
+        </q-card>
+      </div>
     </div>
-  </div> -->
+  </q-page>
 </template>
 
 <script>
-import { ref } from "vue";
+import { useStore } from "vuex";
+import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
+import { ref, computed } from "vue";
 
 export default {
   setup() {
+    const password = ref("");
+    const rePassword = ref("");
+    const store = useStore();
+    const router = useRouter();
+    const q = useQuasar();
+    const profile = computed({
+      get: () => store.state.dvgchat.profile,
+    });
+    const visibilityPassword = ref(true);
+    const visibilityRePassword = ref(true);
+
     return {
-      text: ref(""),
-      ph: ref(""),
-      dense: ref(false),
+      password,
+      rePassword,
+      store,
+      router,
+      profile,
+      q,
+      visibilityPassword,
+      visibilityRePassword,
+      changePassword() {
+        let ch = {
+          password: password.value,
+        };
+        store.dispatch("dvgchat/updatePassword", ch)
+        .then((response) => {
+          q.notify({
+            color: "green",
+            message: "Your password is Updated",
+            position: "top",
+          });
+        })
+        .catch((error)=>{
+          q.notify({
+            color: "red",
+            message: "Your password is Updated",
+            position: "top",
+          });
+        })
+      },
     };
   },
 };

@@ -348,7 +348,6 @@ export default {
         store
           .dispatch("dvgchat/authRequest", logIn)
           .then((response) => {
-            console.log("response index.vue", response);
             quasar.notify({
               type: "positive",
               message: "You are logged in",
@@ -357,7 +356,6 @@ export default {
             router.push("/chat");
           })
           .catch((error) => {
-            console.log("error: ", error);
             quasar.notify({
               type: "negative",
               message: "Please provide your username and password",
@@ -376,7 +374,6 @@ export default {
         store
           .dispatch("dvgchat/registerRequest", registration)
           .then((response) => {
-            console.log("response index.vue", response);
             quasar.notify({
               type: "positive",
               message: "You have been registered, you can log in now",
@@ -391,7 +388,6 @@ export default {
             fullNameRegister.value = "";
           })
           .catch((error) => {
-            console.log("error: ", error);
             quasar.notify({
               type: "negative",
               message: "An error occured, try again",
