@@ -1,5 +1,6 @@
 <template>
-  <div class="q-pa-md">
+  <div class="col-4 text-center text-h4 text-white">Under Construction</div>
+  <!-- <div class="q-pa-md">
     <div class="q-gutter-y-md column" style="max-width: 300px">
       <q-toggle v-model="dense" label="Dense QInput" />
 
@@ -176,7 +177,7 @@
         readonly
       />
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
