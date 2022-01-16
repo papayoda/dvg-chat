@@ -44,7 +44,6 @@
                 <q-card-section class="flex flex-center">
                   <q-avatar
                     color
-                    class="bg-animation3"
                     text-color="white"
                     size="6rem"
                     font-size="8rem"
