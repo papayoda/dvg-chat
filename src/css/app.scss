@@ -10,26 +10,24 @@
 }
 
 .opacity {
-  background-color: rgba(0, 0, 0, 0)!important;
+  background-color: rgba(0, 0, 0, 0) !important;
 }
 //.opacity2 {
 //  background-color: rgba($color: #000000, $alpha: 0) !important;
 //}
 
 .bg-animation {
-  background: linear-gradient(-45deg, #32b7b6, #3581a5, #425389, #115576);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
+  background: linear-gradient(-65deg, #32b7b6, #3581a5, #425389, #115576);
+  background-size: 400%;
+  animation: gradient 12s infinite alternate;
   height: 80vh;
-  color: rgb(31, 31, 31);
 }
 
 .bg-animation2 {
-  background: linear-gradient(-45deg, #32b7b6, #3581a5, #425389, #115576);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
+  background: linear-gradient(-65deg, #32b7b6, #3581a5, #425389, #115576);
+  background-size: 400%;
+  animation: gradient 12s infinite alternate;
   height: 10%;
-  color: rgb(31, 31, 31);
 }
 
 .chat-card {
@@ -38,7 +36,7 @@
   max-width: 1000px;
   height: 80vh;
   min-height: 200px;
-  max-height: 1000px
+  max-height: 1000px;
 }
 
 .scroll-area-chat {
