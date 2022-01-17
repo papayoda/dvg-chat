@@ -26,7 +26,7 @@
 * [Vue.js](https://vuejs.org/)
 * [Mongodb](https://www.mongodb.com/)
 * [Strapi](https://strapi.io/)
-* [Nginx Proxy Manager](https://www.nginx.com/)
+* [Nginx Proxy Manager](https://nginxproxymanager.com/)
 * [portainer.io](https://www.portainer.io/)
 * [Docker](https://www.docker.com/)
 
