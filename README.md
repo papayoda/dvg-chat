@@ -36,7 +36,7 @@
 - [x] GitHub Repository
 - [x] Index
     - [x] Login 
-    - [x] Sigup
+    - [x] Signup
     - [x] validations
     - [x] rememberMe localstorage
     - [x] toggle password visibility
