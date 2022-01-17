@@ -15,15 +15,9 @@
 </div>
 
 <!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#built-with">Built With</a>
-    </li>
-    <li><a href="#roadmap">Roadmap</a></li>
-  </ol>
-</details>
+### Table of Contents
+<li><a href="#built-with">Built With</a></li>
+<li> <a href="#roadmap">Roadmap</a></li>
 
 ### Built With
 
@@ -35,9 +29,6 @@
 * [Nginx Proxy Manager](https://www.nginx.com/)
 * [portainer.io](https://www.portainer.io/)
 * [Docker](https://www.docker.com/)
-
-
-
 
 <!-- ROADMAP -->
 ## Roadmap
