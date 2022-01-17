@@ -15,6 +15,7 @@
                   dark
                   v-model="password"
                   placeholder="Password"
+                  :rules="[required, isPassword]"
                   color="white"
                   :type="visibilityPassword ? 'password' : 'text'"
                 >
@@ -38,6 +39,7 @@
                   bottom-slots
                   dark
                   v-model="rePassword"
+                  :rules="[required, samePassword]"
                   placeholder="Retype Password"
                   color="white"
                   :type="visibilityRePassword ? 'password' : 'text'"
@@ -59,6 +61,7 @@
               <q-card-section>
                 <q-btn
                   no-caps
+                  :disable="password != rePassword"
                   label="Change Password"
                   class="full-width bg-animation2"
                   unelevated
@@ -107,21 +110,47 @@ export default {
         let ch = {
           password: password.value,
         };
-        store.dispatch("dvgchat/updatePassword", ch)
-        .then((response) => {
-          q.notify({
-            color: "green",
-            message: "Your password is Updated",
-            position: "top",
+        store
+          .dispatch("dvgchat/updatePassword", ch)
+          .then((response) => {
+            password.value = "";
+            rePassword.value = "";
+            q.notify({
+              color: "green",
+              message: "Your password is updated",
+              position: "top",
+            });
+          })
+          .catch((error) => {
+            password.value = "";
+            rePassword.value = "";
+            q.notify({
+              color: "red",
+              message: "Your password is updated",
+              position: "top",
+            });
           });
-        })
-        .catch((error)=>{
-          q.notify({
-            color: "red",
-            message: "Your password is Updated",
-            position: "top",
-          });
-        })
+      },
+
+      required(val) {
+        return new Promise((resolve) => {
+          resolve(!!val || "* Required");
+        });
+      },
+      isPassword(val) {
+        const passwordRegex =
+          /^(?=.*[0-9])(?=.*[!@#$%^&*+:])[a-zA-Z0-9!@#$%^&*+:]{7,}$/;
+        return new Promise((resolve) => {
+          resolve(
+            passwordRegex.test(val) ||
+              "7 characters minimum which contain at least one numeric digit and a special character"
+          );
+        });
+      },
+      samePassword(val) {
+        return new Promise((resolve) => {
+          resolve(val === rePassword.value || "Not the same password");
+        });
       },
     };
   },
